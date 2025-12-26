@@ -6,7 +6,9 @@ export default function LoginPage() {
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-black to-black" />
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/55 via-black to-black" />
+
+      <div className="absolute inset-0 bg-gradient-to-bl from-purple-900/40 via-transparent to-transparent" />
 
       {/* Noise texture */}
       <div

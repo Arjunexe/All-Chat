@@ -1,6 +1,16 @@
-import { Schema, models, model } from "mongoose";
+import mongoose, { Schema, models, model, Document } from "mongoose";
 
-const UserSchema = new Schema(
+// 1. Define the Interface (The "Type" part)
+export interface IUser extends Document {
+  username: string;
+  email: string;
+  password: string; // Optional because sometimes you might select users without password
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// 2. Pass the Interface to the Schema (Generics)
+const UserSchema = new Schema<IUser>(
   {
     username: {
       type: String,
@@ -22,4 +32,7 @@ const UserSchema = new Schema(
   { timestamps: true },
 );
 
-export const User = models.User || model("User", UserSchema);
+// 3. Export with the Type
+const User = models.User || model<IUser>("User", UserSchema);
+
+export default User;

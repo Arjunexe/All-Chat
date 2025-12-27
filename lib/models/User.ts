@@ -1,4 +1,5 @@
-import mongoose, { Schema, models, model, Document } from "mongoose";
+import { Schema, models, model, Document } from "mongoose";
+import bcrypt from "bcryptjs";
 
 // 1. Define the Interface (The "Type" part)
 export interface IUser extends Document {
@@ -32,7 +33,17 @@ const UserSchema = new Schema<IUser>(
   { timestamps: true },
 );
 
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return;
+  }
+
+  this.password = await bcrypt.hash(this.password, 12);
+});
+
 // 3. Export with the Type
+// models - specific to nextjs, it has a list of all the models created
+// model -
 const User = models.User || model<IUser>("User", UserSchema);
 
 export default User;

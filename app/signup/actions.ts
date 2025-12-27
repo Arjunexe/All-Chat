@@ -3,7 +3,12 @@
 import userModel from "../../lib/models/User";
 import { connectDB } from "@/lib/db";
 
-export async function signup(_prevState: any, formData: FormData) {
+export interface SignupState {
+  error?: string;
+  success?: boolean;
+}
+
+export async function signup(_prevState: SignupState, formData: FormData) {
   const userName = formData.get("username") as string;
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;

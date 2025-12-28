@@ -1,6 +1,6 @@
 "use client";
 
-export default function LoginPage() {
+export default function LoginForm() {
   return (
     <form className="space-y-5">
       <div>

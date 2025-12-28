@@ -19,9 +19,9 @@ const INITIAL_THREADS = [
   {
     id: 3,
     author: "sys_admin",
-    topic: "Yeah She stil the best, needs to come back",
+    topic: "It's all dying, there is no time, plant one today",
     image:
-      "https://w0.peakpx.com/wallpaper/332/9/HD-wallpaper-sunny-leone-hair-bollywood-actress.jpg",
+      "https://images.unsplash.com/photo-1766903993146-1faf27604097?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
 ];
 

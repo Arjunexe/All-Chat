@@ -2,23 +2,30 @@ import { model, models, Schema } from "mongoose";
 import mongoose from "mongoose";
 
 export interface Thread extends Document {
-  title: string;
   author: mongoose.Types.ObjectId;
+  title: string;
+  content: string;
   createdAt: Date;
 }
 
 const ThreadSchema = new Schema<Thread>(
   {
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
     title: {
       type: String,
       required: true,
       trim: true,
     },
 
-    author: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+    content: {
+      type: String,
+      required: false,
+      trim: true,
     },
   },
 

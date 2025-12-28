@@ -8,13 +8,14 @@ type Thread = {
   topic: string;
   image?: string;
   initialLikes?: number;
-  initialComments?: number; // Added for comment count
+  initialComments?: number;
 };
 
 export default function ThreadCard({ thread }: { thread: Thread }) {
   const [input, setInput] = useState("");
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(thread.initialLikes || 0);
+  // icon shrinks after thousand
   const [commentCount] = useState(thread.initialComments || 0);
 
   const handleSend = () => {
@@ -68,43 +69,30 @@ export default function ThreadCard({ thread }: { thread: Thread }) {
       </div>
 
       {/* --- INTERACTIVE FOOTER --- */}
-      <div className="bg-black/20 py-3 pl-2 pr-3 border-t border-white/5 flex items-center gap-2">
-        {/* LIKE BUTTON (Pink Glow) */}
+
+      <div className="bg-black/20 px-4 py-2 flex items-center gap-2 border-t border-white/5">
+        {/* LIKE BUTTON */}
         <button
           onClick={toggleLike}
-          className="group/like flex items-center gap-1.5 transition-colors shrink-0 p-1 rounded-lg hover:bg-white/5"
+          className="group/like flex items-center justify-start w-16 gap-1.5 transition-colors shrink-0 p-2 rounded-lg hover:bg-white/5"
         >
-          <div
-            className={`p-1.5 rounded-full transition-all duration-300 ${
-              liked
-                ? "bg-pink-500/10 text-pink-500"
-                : "text-neutral-500 group-hover/like:text-pink-400"
-            }`}
+          <HeartIcon
+            filled={liked}
+            className={`w-4 h-4 transition-transform duration-300 ${liked ? "scale-110 text-pink-500" : "text-white/60 group-hover/like:text-pink-400"}`}
+          />
+          <span
+            className={`text-xs font-medium ${liked ? "text-pink-400" : "text-neutral-400 group-hover/like:text-neutral-200"}`}
           >
-            <HeartIcon
-              filled={liked}
-              className={`w-4 h-4 transition-transform duration-300 ${liked ? "scale-110" : "scale-100"}`}
-            />
-          </div>
-          {likeCount > 0 && (
-            <span
-              className={`text-xs font-medium min-w-[1.2rem] text-center transition-colors ${liked ? "text-pink-400" : "text-neutral-600 group-hover/like:text-neutral-400"}`}
-            >
-              {likeCount}
-            </span>
-          )}
+            {likeCount || "Like"}
+          </span>
         </button>
 
-        {/* COMMENT BUTTON (Purple Glow) */}
-        <button className="group/comment flex items-center gap-1.5 transition-colors shrink-0 p-1 rounded-lg hover:bg-white/5">
-          <div className="p-1.5 rounded-full transition-all duration-300 text-neutral-500 group-hover/comment:text-purple-400 group-hover/comment:bg-purple-500/20 group-hover/comment:ring-1 group-hover/comment:ring-purple-500/50 group-hover/comment:shadow-[0_0_12px_rgba(168,85,247,0.4)]">
-            <MessageIcon className="w-4 h-4" />
-          </div>
-          {commentCount > 0 && (
-            <span className="text-xs font-medium min-w-[1.2rem] text-center transition-colors text-neutral-600 group-hover/comment:text-neutral-400">
-              {commentCount}
-            </span>
-          )}
+        {/* COMMENT BUTTON - Triggers Expand */}
+        <button className="group/comment flex items-center justify-start w-16 gap-1.5 transition-colors shrink-0 p-2 rounded-lg hover:bg-white/5">
+          <MessageIcon className="w-5 h-5 text-white/60 group-hover/comment:text-purple-400" />
+          <span className="text-xs font-medium text-neutral-400 group-hover/comment:text-neutral-200">
+            {commentCount || "Reply"}
+          </span>
         </button>
       </div>
     </div>
@@ -117,7 +105,8 @@ function MessageIcon({ className }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
+      // CHANGED: Zoom in by cropping the canvas from 24 to 20
+      viewBox="2 2 20 20"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"

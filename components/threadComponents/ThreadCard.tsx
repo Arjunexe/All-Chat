@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 type Thread = {
@@ -37,36 +38,38 @@ export default function ThreadCard({ thread }: { thread: Thread }) {
   return (
     <div className="group relative w-full rounded-2xl border border-white/25 bg-white/5 backdrop-blur-lg overflow-hidden transition-all hover:border-purple-500/40">
       {/* --- MAIN PADDING CONTAINER --- */}
-      <div className="p-5 pb-3">
-        {/* ROW 1: HEADER */}
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-lg text-white font-medium">
-            @{thread.author}
-          </span>
-          <button className="text-neutral-500 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors -mr-2 -mt-2">
-            <MoreVerticalIcon className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* ROW 2: CONTENT */}
-        <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
-          <div className="flex-1 min-w-0">
-            <h3 className="text-lg md:text-xl font-semibold text-white leading-snug">
-              {thread.topic}
-            </h3>
+      <Link href={`/thread/${thread.id}`} className="block cursor-pointer">
+        <div className="p-5 pb-3">
+          {/* ROW 1: HEADER */}
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-lg text-white font-medium">
+              @{thread.author}
+            </span>
+            <button className="text-neutral-500 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors -mr-2 -mt-2">
+              <MoreVerticalIcon className="w-5 h-5" />
+            </button>
           </div>
 
-          {thread.image && (
-            <div className="shrink-0 w-full md:w-32">
-              <img
-                src={thread.image}
-                alt="Topic attachment"
-                className="w-full h-48 md:h-32 rounded-xl object-cover border border-white/10 bg-white/5"
-              />
+          {/* ROW 2: CONTENT */}
+          <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg md:text-xl font-semibold text-white leading-snug">
+                {thread.topic}
+              </h3>
             </div>
-          )}
+
+            {thread.image && (
+              <div className="shrink-0 w-full md:w-32">
+                <img
+                  src={thread.image}
+                  alt="Topic attachment"
+                  className="w-full h-48 md:h-32 rounded-xl object-cover border border-white/10 bg-white/5"
+                />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </Link>
 
       {/* --- INTERACTIVE FOOTER --- */}
 

@@ -1,5 +1,5 @@
-import ThreadButton from "@/components/feed/ThreadButton";
-import ThreadCard from "../../components/feed/ThreadCard";
+import ThreadButton from "@/components/threadComponents/ThreadButton";
+import ThreadCard from "../../components/threadComponents/ThreadCard";
 
 // This data will eventually come from Prisma/DB
 const INITIAL_THREADS = [

@@ -1,7 +1,17 @@
+"use client";
+import { useState } from "react";
+import CreateThreadModal from "../threadComponents/createThread";
+
 function ThreadButton() {
+  const [isOpen, setIsOpen] = useState(false);
+  console.log("its heree: ", isOpen);
+
   return (
     <>
-      <button className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-[0_0_20px_rgba(147,51,234,0.3)]">
+      <button
+        onClick={() => setIsOpen(true)}
+        className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-[0_0_20px_rgba(147,51,234,0.3)]"
+      >
         <span>+ New Topic</span>
         {/* You can inline the SVG or make it a component */}
         <svg
@@ -16,6 +26,8 @@ function ThreadButton() {
           <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
         </svg>
       </button>
+
+      {isOpen && <CreateThreadModal onClose={() => setIsOpen(false)} />}
     </>
   );
 }

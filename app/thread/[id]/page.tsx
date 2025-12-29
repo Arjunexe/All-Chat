@@ -8,6 +8,7 @@ type ThreadData = {
   id: number;
   author: string;
   topic: string;
+  content?: string;
   image?: string; // 👈 The '?' makes it optional (no error if missing)
   initialLikes?: number; // 👈 Optional
   comments: { id: number; user: string; text: string }[];
@@ -21,6 +22,10 @@ const MOCK_DB: Record<string, ThreadData> = {
       "Just got the new mechanical keyboard. The sound profile is deep thock, not clack. ⌨️",
     image:
       "https://images.unsplash.com/photo-1595225476474-87563907a212?w=500&q=80",
+
+    content:
+      "Lorem Ipsum is placeholder text commonly used in design and typesetting to fill space without distracting from layout elements. Lorem 200 typically requests about 200 words of this dummy textLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciuntNeque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+
     initialLikes: 120,
     comments: [
       { id: 1, user: "keeb_fan", text: "Which switches did you go with?" },
@@ -82,7 +87,7 @@ export default async function ThreadDetailPage({ params }: PageProps) {
 
         {/* Content Body */}
         <div className="p-6 space-y-6">
-          <p className="text-lg md:text-xl leading-relaxed text-neutral-100">
+          <p className="text-lg md:text-xl font-extrabold leading-relaxed text-neutral-100">
             {thread.topic}
           </p>
 
@@ -96,6 +101,8 @@ export default async function ThreadDetailPage({ params }: PageProps) {
               />
             </div>
           )}
+
+          {thread.content && <div>{thread.content}</div>}
         </div>
 
         {/* Stats Bar */}

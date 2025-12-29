@@ -3,7 +3,7 @@ import mongoose, { model, models, Schema } from "mongoose";
 export interface Comment extends Document {
   threadId: mongoose.Types.ObjectId;
   authorId: mongoose.Types.ObjectId;
-  comment: string;
+  comment: string[];
   likesCount: number;
 }
 
@@ -22,7 +22,7 @@ const CommentSchema = new Schema<Comment>(
     },
 
     comment: {
-      type: String,
+      type: [String],
       required: true,
       trim: true,
     },

@@ -5,6 +5,7 @@ export interface Thread extends Document {
   author: mongoose.Types.ObjectId;
   title: string;
   content: string;
+  likes: string;
   createdAt: Date;
 }
 
@@ -26,6 +27,11 @@ const ThreadSchema = new Schema<Thread>(
       type: String,
       required: false,
       trim: true,
+    },
+
+    likes: {
+      type: String,
+      required: false,
     },
   },
 

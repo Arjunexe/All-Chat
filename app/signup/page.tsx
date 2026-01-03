@@ -3,7 +3,7 @@ import SignupForm from "../../components/auth/SignupForm";
 
 export default function SignupPage() {
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden">
+    <main className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden">
       {/* Background gradient */}
 
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/55 via-black to-black" />
@@ -38,6 +38,6 @@ export default function SignupPage() {
           </Link>
         </p>
       </div>
-    </div>
+    </main>
   );
 }

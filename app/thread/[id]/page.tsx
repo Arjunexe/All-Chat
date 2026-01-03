@@ -53,7 +53,7 @@ interface PageProps {
 
 // In Next.js 15, params is a Promise, but in 14 it's an object.
 // Assuming Next.js 14 for simplicity, but if you get an error, add 'await'
-export default async function ThreadDetailPage({ params }: PageProps) {
+export default async function ThreadExpand({ params }: PageProps) {
   const { id } = await params;
   const thread = MOCK_DB[id]; // If ID doesn't exist, show 404
   if (!thread) {

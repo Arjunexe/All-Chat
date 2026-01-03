@@ -1,5 +1,6 @@
 "use client";
 
+import { uploadToChatroom } from "@/lib/cloudinary/cloudinaryUpload";
 import { useState, ChangeEvent } from "react";
 
 interface CreateThreadModalProps {
@@ -13,10 +14,13 @@ export default function CreateThreadModal({ onClose }: CreateThreadModalProps) {
   console.log("hi");
 
   // Handle Image Upload (Preview only for now)
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setSelectedImage(URL.createObjectURL(file));
+      const formData = new FormData();
+      formData.append("image", file);
+      const result = await uploadToChatroom(formData);
     }
   };
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { createThreadAction } from "@/app/thread/action";
 import { uploadToChatroom } from "@/lib/cloudinary/cloudinaryUpload";
 import { useState, ChangeEvent } from "react";
 
@@ -11,18 +12,38 @@ export default function CreateThreadModal({ onClose }: CreateThreadModalProps) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  console.log("hi");
-
-  // Handle Image Upload (Preview only for now)
+  const [imageFile, setImageFile] = useState<File | null>(null); // Handle Image Upload (Preview only for now)
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      setImageFile(file);
       setSelectedImage(URL.createObjectURL(file));
-      const formData = new FormData();
-      formData.append("image", file);
-      const result = await uploadToChatroom(formData);
     }
   };
+
+  async function handleSubmit() {
+    try {
+      if (!title.trim()) {
+        alert("Title is required");
+        return;
+      }
+      let finalImageUrl: string | null = null;
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("image", imageFile);
+        const result = await uploadToChatroom(formData);
+        finalImageUrl = result.url;
+      }
+
+      const result = await createThreadAction({
+        title: title,
+        content: content,
+        imageUrl: finalImageUrl,
+      });
+    } catch (error) {
+      console.log("error during handleUpload: ", error);
+    }
+  }
 
   return (
     // 1. Backdrop (covers the whole screen)
@@ -30,9 +51,6 @@ export default function CreateThreadModal({ onClose }: CreateThreadModalProps) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-0 md:p-4"
       onClick={onClose}
     >
-      {/* 2. Modal Container */}
-      {/* Mobile: w-full h-full (fills screen) */}
-      {/* Desktop: max-w-lg rounded-xl (looks like a box) */}
       <div
         className="w-full h-full md:h-auto md:max-w-xl border backdrop-blur-3xl border-neutral-700 md:rounded-xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
@@ -131,7 +149,10 @@ export default function CreateThreadModal({ onClose }: CreateThreadModalProps) {
           >
             Cancel
           </button>
-          <button className="bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-lg text-sm font-medium shadow-[0_0_15px_rgba(147,51,234,0.3)] transition-all transform active:scale-95">
+          <button
+            onClick={handleSubmit}
+            className="bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-lg text-sm font-medium shadow-[0_0_15px_rgba(147,51,234,0.3)] transition-all transform active:scale-95"
+          >
             Post Topic
           </button>
         </div>

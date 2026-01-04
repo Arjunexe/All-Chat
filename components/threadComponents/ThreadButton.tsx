@@ -4,7 +4,6 @@ import CreateThreadModal from "../threadComponents/createThread";
 
 function ThreadButton() {
   const [isOpen, setIsOpen] = useState(false);
-  console.log("its heree: ", isOpen);
 
   return (
     <>

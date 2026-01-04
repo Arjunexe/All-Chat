@@ -1,6 +1,6 @@
 "use server";
 
-import userModel from "../../lib/models/User";
+import userModel from "@/lib/models/User";
 import { connectDB } from "@/lib/db";
 
 export interface SignupState {

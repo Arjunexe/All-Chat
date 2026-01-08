@@ -45,3 +45,5 @@ const ThreadSchema = new Schema<Thread>(
 );
 
 const Thread = models.Thread || model<Thread>("Thread", ThreadSchema);
+
+export default Thread;

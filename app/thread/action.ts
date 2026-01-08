@@ -1,5 +1,8 @@
 "use server";
 
+import threadModal from "@/lib/models/Threads";
+import { connectDB } from "@/lib/db";
+
 interface createThreadData {
   title: string;
   content?: string;
@@ -9,5 +12,16 @@ interface createThreadData {
 export async function createThreadAction(data: createThreadData) {
   const { title, content, imageUrl } = data;
 
-  console.log("data is here I thinkKKKk : ", title, content, imageUrl);
+  try {
+    await connectDB();
+    const newThread = new threadModal({
+      title: title,
+      content: content,
+      postImage: imageUrl,
+    });
+    await newThread.save();
+  } catch (error) {
+    console.error("something went wrong during creating the thread", error);
+    return { error: "System Error: Please try again later." };
+  }
 }
